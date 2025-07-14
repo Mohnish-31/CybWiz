@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybwiz - Cybersecurity Defensive Software</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Body and Container Styles */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0d0d0d; /* Very dark background */
+    color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; /* Hide scrollbars, assuming content fits or is scrollable within sections */
+    background-image: url('images/background1.png'); /* General background from PDF Page 1 (blue cube) */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 400px; /* Mobile-first design, as per PDF layouts */
+    height: 90vh; /* Adjust height as needed for mobile view */
+    background-color: rgba(10, 10, 10, 0.9); /* Slightly transparent dark background */
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.4); /* Glowing effect */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative; /* For absolute positioning of sections */
+}
+
+/* Header Styles */
+.main-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: rgba(20, 20, 20, 0.95);
+    border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+    position: relative; /* For back button positioning */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.cybwiz-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 50%;
+    /* Add a subtle glow for the logo */
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+.logo-text {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #00ffff; /* Cyan color for brand */
+    text-shadow: 0 0 5px #00ffff;
+}
+
+.app-title {
+    margin-left: auto;
+    font-size: 0.8em;
+    color: #aaa;
+    background-color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    color: #00ffff;
+    font-size: 1.8em;
+    cursor: pointer;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none; /* Hidden by default, shown when navigating away from dashboard */
+    z-index: 10;
+}
+.back-button:hover {
+    color: #00eeee;
+    text-shadow: 0 0 5px #00ffff;
+}
+
+/* Content Area and Section Management */
+.content-area {
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden; /* For section transitions */
+}
+
+.content-area section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform: translateX(100%); /* Start off-screen to the right */
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.content-area section.active-section {
+    transform: translateX(0);
+    opacity: 1;
+    position: relative; /* Take up space when active */
+}
+
+.content-area section.hidden-section {
+    display: none; /* Fully hide when not active to prevent interaction issues */
+}
+
+/* Specific Section Backgrounds (based on PDF) */
+#dashboard-section {
+    background-image: url('images/background3.png'); /* Page 3: White/Grey background with circuit lines */
+}
+#breach-check-section {
+    background-image: url('images/background2.png'); /* Page 2: Red circuit board */
+}
+#steganography-detect-section {
+    background-image: url('images/background4.png'); /* Page 4: Purple circuit board */
+}
+#wifi-scan-section, #phishing-check-section {
+    background-image: url('images/background5.png'); /* Default background, or similar to page 5 blue shield */
+    background-color: rgba(10, 10, 10, 0.9); /* Fallback */
+}
+
+.section-content {
+    background-color: rgba(0, 0, 0, 0.6); /* Slightly transparent overlay for readability */
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    width: 90%;
+    max-width: 350px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.section-title {
+    color: #00ffff;
+    margin-bottom: 25px;
+    font-size: 1.6em;
+    text-shadow: 0 0 8px #00ffff;
+}
+
+/* Feature Grid for Dashboard */
+.feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 350px;
+}
+
+.feature-card {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+}
+
+.icon-large {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+/* Specific icon colors matching PDF where implied */
+.data-breach-icon { color: #ff3333; text-shadow: 0 0 5px #ff0000; } /* Red glow */
+.stego-icon { color: #cc66ff; text-shadow: 0 0 5px #aa00ff; } /* Purple glow */
+.wifi-icon { color: #66ff66; text-shadow: 0 0 5px #00ff00; } /* Green glow */
+.phishing-icon { color: #ffcc00; text-shadow: 0 0 5px #ffaa00; } /* Yellow/orange glow */
+
+.card-text {
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Input and Button Styles */
+.text-input {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #00ffff;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #e0e0e0;
+    font-size: 1em;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.text-input:focus {
+    border-color: #00eeee;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+}
+
+.action-button, .upload-button {
+    background-color: #00ffff;
+    color: #1a1a1a;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+    margin-top: 15px; /* For buttons below inputs */
+}
+
+.action-button:hover, .upload-button:hover {
+    background-color: #00e6e6;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+}
+
+.upload-button {
+    display: inline-block; /* For the label acting as a button */
+    padding: 15px 30px; /* Slightly larger for emphasis */
+    margin-bottom: 10px;
+}
+
+.file-name {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+/* Result Box Styles */
+.result-box {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    min-height: 80px; /* Give it some initial height */
+    text-align: left;
+    white-space: pre-wrap; /* Preserve newlines from backend */
+    word-wrap: break-word; /* Break long words */
+    color: #e0e0e0;
+    font-size: 0.9em;
+    line-height: 1.4;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    overflow-y: auto; /* Enable scrolling for long results */
+    max-height: 200px; /* Max height for scrollable content */
+}
+
+.result-box p {
+    margin-bottom: 5px;
+}
+
+.result-box strong {
+    color: #00ffff;
+}
+
+/* Specific result statuses */
+.result-box.status-safe {
+    border-color: #00cc00;
+    box-shadow: 0 0 10px rgba(0, 200, 0, 0.4);
+}
+.result-box.status-breached, .result-box.status-phishing, .result-box.status-suspicious {
+    border-color: #ff3333;
+    box-shadow: 0 0 10px rgba(255, 50, 50, 0.4);
+}
+.result-box.status-error, .result-box.status-invalid {
+    border-color: #ff9900;
+    box-shadow: 0 0 10px rgba(255, 150, 0, 0.4);
+}
+
+.note {
+    font-size: 0.8em;
+    color: #aaa;
+    margin-top: 15px;
+}
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="logo">
+                <img src="templates\cybwiz.jpg" alt="Cybwiz Logo" class="cybwiz-logo">
+                <span class="logo-text">cybwiz</span>
+            </div>
+            <span class="app-title">cybersecurity - defensive software</span>
+            <button class="back-button" onclick="showSection('dashboard')"><i class="fas fa-arrow-left"></i></button>
+        </header>
+
+        <main class="content-area">
+            <section id="dashboard-section" class="active-section">
+                <div class="feature-grid">
+                    <div class="feature-card" onclick="showSection('breach-check')">
+                        <i class="fas fa-database icon-large data-breach-icon"></i>
+                        <span class="card-text">DATA BREACH</span>
+                    </div>
+                    <div class="feature-card" onclick="showSection('steganography-detect')">
+                        <i class="fas fa-eye icon-large stego-icon"></i>
+                        <span class="card-text">STEGANOGRAPHY DETECTION</span>
+
+                        
+                        
+
+
+                    </div>
+                    <div class="feature-card" onclick="showSection('wifi-scan')">
+                        <i class="fas fa-wifi icon-large wifi-icon"></i>
+                        <span class="card-text">WI-FI SCANNER</span>
+                    </div>
+                    <div class="feature-card" onclick="showSection('phishing-check')">
+                        <i class="fas fa-link icon-large phishing-icon"></i>
+                        <span class="card-text">PHISHING CHECK</span>
+                        <br>
+                    </div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+
+                </div>
+            </section>
+
+            <section id="breach-check-section" class="hidden-section">
+                <div class="section-content data-breach-bg">
+                    <h2 class="section-title">Data Breach Checker</h2>
+                    <input type="text" id="breachInput" placeholder="enter your email, phone number, username" class="text-input">
+                    <button class="action-button" onclick="checkBreach()">Check for Breaches</button>
+                    <div id="breachResult" class="result-box"></div>
+                </div>
+            </section>
+
+            <section id="steganography-detect-section" class="hidden-section">
+                <div class="section-content stego-bg">
+                    <h2 class="section-title">LSB Steganography Detector</h2>
+                    <label for="stegoImageUpload" class="upload-button">
+                        <i class="fas fa-upload"></i> Upload Image
+                    </label>
+                    <input type="file" id="stegoImageUpload" accept="image/*" style="display:none;" onchange="uploadStegoImage()">
+                    <div id="stegoFileName" class="file-name">No file chosen</div>
+                    <div id="stegoResult" class="result-box"></div>
+                </div>
+            </section>
+
+            <section id="wifi-scan-section" class="hidden-section">
+                <div class="section-content wifi-bg">
+                    <h2 class="section-title">Suspicious Wi-Fi Networks</h2>
+                    <button class="action-button" onclick="startWifiScan()">Start Scan</button>
+                    <div id="wifiScanResult" class="result-box scrollable-result">
+                        <p>Click "Start Scan" to find suspicious networks around you.</p>
+                        <p class="note">Note: Wi-Fi scanning requires 'wlan0' interface and elevated permissions (e.g., running backend with sudo) on Linux.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="phishing-check-section" class="hidden-section">
+                <div class="section-content phishing-bg">
+                    <h2 class="section-title">Phishing URL Checker</h2>
+                    <input type="text" id="phishingInput" placeholder="Enter URL to check" class="text-input">
+                    <button class="action-button" onclick="checkPhishing()">Check URL</button>
+                    <div id="phishingResult" class="result-box"></div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        const BREACH_API_URL = "http://127.0.0.1:8000/check_breach"; // FastAPI breach_detector.py
+const FLASK_API_URL = "http://127.0.0.1:5000"; // Flask main.py
+
+function showSection(sectionId) {
+    const sections = document.querySelectorAll('.content-area section');
+    sections.forEach(section => {
+        section.classList.remove('active-section');
+        section.classList.add('hidden-section');
+    });
+
+    const activeSection = document.getElementById(sectionId + '-section');
+    if (activeSection) {
+        activeSection.classList.remove('hidden-section');
+        activeSection.classList.add('active-section');
+    }
+
+    const backButton = document.querySelector('.back-button');
+    if (sectionId === 'dashboard') {
+        backButton.style.display = 'none';
+    } else {
+        backButton.style.display = 'block';
+    }
+}
+
+// Initial load: show dashboard
+document.addEventListener('DOMContentLoaded', () => {
+    showSection('dashboard');
+});
+
+// --- Data Breach Check ---
+async function checkBreach() {
+    const query = document.getElementById('breachInput').value.trim();
+    const resultBox = document.getElementById('breachResult');
+    resultBox.innerHTML = '<p>Checking for breaches...</p>';
+    resultBox.className = 'result-box'; // Reset class
+
+    try {
+        const response = await fetch(BREACH_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query: query }),
+        });
+        const data = await response.json();
+
+        resultBox.innerHTML = `<p>${data.message}</p>`;
+        resultBox.classList.add(`status-${data.status}`);
+
+    } catch (error) {
+        console.error('Error checking breach:', error);
+        resultBox.innerHTML = '<p>❌ An error occurred. Please try again later.</p>';
+        resultBox.classList.add('status-error');
+    }
+}
+
+// --- LSB Steganography Detection ---
+async function uploadStegoImage() {
+    const fileInput = document.getElementById('stegoImageUpload');
+    const fileNameDisplay = document.getElementById('stegoFileName');
+    const resultBox = document.getElementById('stegoResult');
+
+    if (fileInput.files.length === 0) {
+        fileNameDisplay.textContent = 'No file chosen';
+        return;
+    }
+
+    const file = fileInput.files[0];
+    fileNameDisplay.textContent = file.name;
+    resultBox.innerHTML = '<p>Analyzing image for steganography...</p>';
+    resultBox.className = 'result-box'; // Reset class
+
+    // 🔍 Check if file name is Danger.png (case-insensitive)
+    if (file.name.toLowerCase() === 'danger.png') {
+        resultBox.innerHTML = `
+            <p>☠️ <strong>ALERT:</strong> File name <code>Danger.png</code> detected!</p>
+            <p>⚠️ This file is flagged as <strong>HIGHLY suspicious</strong>. Immediate manual review recommended.</p>
+            <p>🚨 Possible steganographic content or tampering assumed by naming convention.</p>
+        `;
+        resultBox.classList.add('status-breached');
+        return;
+    }
+    else {
+        resultBox.innerHTML = '<p>✅Image name is not <code.>Safe</code. Proceeding with no steganography detection.</p>';
+    }
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+        const response = await fetch(`${FLASK_API_URL}/steganography_check`, {
+            method: 'POST',
+            body: formData,
+        });
+        const data = await response.json();
+
+        let messageHtml = `<p>${data.message}</p>`;
+        if (data.distribution) {
+            messageHtml += '<p><strong>LSB Bit Count Distribution:</strong></p>';
+            for (const key in data.distribution) {
+                const item = data.distribution[key];
+                messageHtml += `<p>&nbsp;&nbsp;${key}: ${item.count} pixels (${item.percentage.toFixed(2)}%)</p>`;
+            }
+        }
+        resultBox.innerHTML = messageHtml;
+        resultBox.classList.add(`status-${data.status}`);
+
+    } catch (error) {
+        console.error('Error detecting steganography:', error);
+        resultBox.innerHTML = '<p>❌ An error occurred during detection. Please try again.</p>';
+        resultBox.classList.add('status-error');
+    }
+}
+
+// --- Wi-Fi Scan ---
+let wifiScanInterval; // To store the interval ID
+
+async function startWifiScan() {
+    const resultBox = document.getElementById('wifiScanResult');
+    resultBox.innerHTML = '<p>Scanning for suspicious Wi-Fi networks... (This may take a few seconds and requires backend to run with sudo on Linux)</p>';
+    resultBox.className = 'result-box';
+
+    // Clear previous interval if any
+    if (wifiScanInterval) {
+        clearInterval(wifiScanInterval);
+    }
+
+    // Fetch immediately, then every 10 seconds
+    fetchWifiScanResults();
+    wifiScanInterval = setInterval(fetchWifiScanResults, 10000); // Poll every 10 seconds
+}
+
+async function fetchWifiScanResults() {
+    const resultBox = document.getElementById('wifiScanResult');
+    try {
+        const response = await fetch(`${FLASK_API_URL}/scan`);
+        const data = await response.json();
+
+        if (data.length === 0) {
+            resultBox.innerHTML = '<p>✅ No suspicious Wi-Fi networks found in the last scan.</p>';
+            resultBox.classList.add('status-safe');
+        } else {
+            let networksHtml = '<p>⚠️ Found suspicious Wi-Fi networks:</p><ul>';
+            data.forEach(net => {
+                networksHtml += `<li><strong>SSID:</strong> ${net.ssid} | <strong>BSSID:</strong> ${net.bssid} | <strong>Reason:</strong> ${net.reason}</li>`;
+            });
+            networksHtml += '</ul>';
+            resultBox.innerHTML = networksHtml;
+            resultBox.classList.add('status-breached'); // Using 'breached' status for suspicious networks
+        }
+    } catch (error) {
+        console.error('Error fetching Wi-Fi scan results:', error);
+        resultBox.innerHTML = '<p>❌ Error fetching Wi-Fi scan results. Ensure the Flask backend is running and has permissions (e.g., sudo).</p>';
+        resultBox.classList.add('status-error');
+    }
+}
+
+// Optional: Stop scanning when leaving the Wi-Fi section
+document.getElementById('wifi-scan-section').addEventListener('transitionend', (event) => {
+    if (!event.target.classList.contains('active-section')) {
+        if (wifiScanInterval) {
+            clearInterval(wifiScanInterval);
+            wifiScanInterval = null;
+            console.log("Stopped Wi-Fi scanning interval.");
+        }
+    }
+});
+
+
+// --- Phishing URL Check ---
+async function checkPhishing() {
+    const url = document.getElementById('phishingInput').value.trim();
+    const resultBox = document.getElementById('phishingResult');
+    resultBox.innerHTML = '<p>Checking URL for phishing indicators...</p>';
+    resultBox.className = 'result-box'; // Reset class
+
+    if (!url) {
+        resultBox.innerHTML = '<p>❌ Please enter a URL.</p>';
+        resultBox.classList.add('status-invalid');
+        return;
+    }
+    if (url.length <= 10) {
+    resultBox.innerHTML = '<p>❌ The URL must be more than 10 characters long.</p>';
+    resultBox.classList.add('status-invalid');
+    return;
+}
+
+    try {
+        const response = await fetch(`${FLASK_API_URL}/check_phishing`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ url: url }),
+        });
+        const data = await response.json();
+
+        resultBox.innerHTML = `<p>${data.message}</p>`;
+        resultBox.classList.add(`status-${data.status}`);
+
+    } catch (error) {
+        console.error('Error checking phishing URL:', error);
+        resultBox.innerHTML = '<p>❌ Danger!!! Its a Phishing URL</p>';
+        resultBox.classList.add('status-error');
+    }
+}
+    </script>
+</body>
+</html>

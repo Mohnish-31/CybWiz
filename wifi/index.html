@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WiFi Scanner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .network { background: #f0f0f0; padding: 10px; margin: 5px; border-radius: 5px; }
+        .danger { background: #ffcccc; }
+    </style>
+</head>
+<body>
+    <h2>WiFi Security Scan</h2>
+    <div id="results"></div>
+    
+    <script>
+        function loadResults() {
+            fetch('/scan')
+                .then(r => r.json())
+                .then(networks => {
+                    let html = '';
+                    networks.forEach(net => {
+                        html += `<div class="network ${net.reason ? 'danger' : ''}">
+                            <b>${net.ssid}</b><br>
+                            MAC: ${net.bssid}<br>
+                            ${net.reason || 'Secure'}
+                        </div>`;
+                    });
+                    document.getElementById('results').innerHTML = 
+                        networks.length ? html : '<p>No suspicious networks found</p>';
+                });
+        }
+        
+        setInterval(loadResults, 5000);
+        loadResults();
+    </script>
+</body>
+</html>
