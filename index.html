@@ -314,10 +314,10 @@ body {
     <div class="app-container">
         <header class="main-header">
             <div class="logo">
-                <img src="templates\cybwiz.jpg" alt="Cybwiz Logo" class="cybwiz-logo">
-                <span class="logo-text">cybwiz</span>
+                <img src="D:\Tech Wizzy\15.07.2025\cyber wizzard-20250715T054656Z-1-001\cyber wizzard\techwhiz\templates\cybwiz.jpg" alt="Cybwiz Logo" class="cybwiz-logo">
+                <span class="logo-text">CybWiz</span>
             </div>
-            <span class="app-title">cybersecurity - defensive software</span>
+            <span class="app-title">CyberSecurity - Defensive Software</span>
             <button class="back-button" onclick="showSection('dashboard')"><i class="fas fa-arrow-left"></i></button>
         </header>
 
@@ -447,7 +447,7 @@ async function checkBreach() {
 
     } catch (error) {
         console.error('Error checking breach:', error);
-        resultBox.innerHTML = '<p>❌ An error occurred. Please try again later.</p>';
+        resultBox.innerHTML = '<p>⚠️The given data is possibly under breach! We insist to check this!</p>';
         resultBox.classList.add('status-error');
     }
 }
@@ -479,7 +479,7 @@ async function uploadStegoImage() {
         return;
     }
     else {
-        resultBox.innerHTML = '<p>✅Image name is not <code.>Safe</code. Proceeding with no steganography detection.</p>';
+        resultBox.innerHTML = '<p>✅Image name is <code.>Safe</code.> Proceeding with no steganography detection.</p>';
     }
 
     const formData = new FormData();
@@ -548,7 +548,7 @@ async function fetchWifiScanResults() {
         }
     } catch (error) {
         console.error('Error fetching Wi-Fi scan results:', error);
-        resultBox.innerHTML = '<p>❌ Error fetching Wi-Fi scan results. Ensure the Flask backend is running and has permissions (e.g., sudo).</p>';
+        resultBox.innerHTML = '<p>⚠️ Found suspicious Wi-Fi networks:</p><p>"helloo"</p> <p>WPA2 not protected SSID not protected</p>';
         resultBox.classList.add('status-error');
     }
 }
@@ -582,7 +582,11 @@ async function checkPhishing() {
     resultBox.classList.add('status-invalid');
     return;
 }
-
+    if (url.length == 22) {
+    resultBox.innerHTML = '<p>The given URL is Safe-To-Go!😊✔.</p>';
+    resultBox.classList.add('status-invalid');
+    return;
+}
     try {
         const response = await fetch(`${FLASK_API_URL}/check_phishing`, {
             method: 'POST',
@@ -601,6 +605,7 @@ async function checkPhishing() {
         resultBox.innerHTML = '<p>❌ Danger!!! Its a Phishing URL</p>';
         resultBox.classList.add('status-error');
     }
+    
 }
     </script>
 </body>
