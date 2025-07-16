@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* General Body and Container Styles */
+
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -24,6 +25,8 @@ body {
     background-repeat: no-repeat;
 }
 
+
+
 .app-container {
     width: 100%;
     max-width: 400px; /* Mobile-first design, as per PDF layouts */
@@ -37,6 +40,8 @@ body {
     position: relative; /* For absolute positioning of sections */
 }
 
+
+
 /* Header Styles */
 .main-header {
     display: flex;
@@ -47,10 +52,14 @@ body {
     position: relative; /* For back button positioning */
 }
 
+
+
 .logo {
     display: flex;
     align-items: center;
 }
+
+
 
 .cybwiz-logo {
     width: 40px;
@@ -61,12 +70,16 @@ body {
     box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
 }
 
+
+
 .logo-text {
     font-size: 1.5em;
     font-weight: bold;
     color: #00ffff; /* Cyan color for brand */
     text-shadow: 0 0 5px #00ffff;
 }
+
+
 
 .app-title {
     margin-left: auto;
@@ -76,6 +89,8 @@ body {
     padding: 5px 10px;
     border-radius: 5px;
 }
+
+
 
 .back-button {
     background: none;
@@ -90,10 +105,15 @@ body {
     display: none; /* Hidden by default, shown when navigating away from dashboard */
     z-index: 10;
 }
+
+
+
 .back-button:hover {
     color: #00eeee;
     text-shadow: 0 0 5px #00ffff;
 }
+
+
 
 /* Content Area and Section Management */
 .content-area {
@@ -101,6 +121,8 @@ body {
     position: relative;
     overflow: hidden; /* For section transitions */
 }
+
+
 
 .content-area section {
     position: absolute;
@@ -122,30 +144,45 @@ body {
     background-repeat: no-repeat;
 }
 
+
+
 .content-area section.active-section {
     transform: translateX(0);
     opacity: 1;
     position: relative; /* Take up space when active */
 }
 
+
+
 .content-area section.hidden-section {
     display: none; /* Fully hide when not active to prevent interaction issues */
 }
+
+
 
 /* Specific Section Backgrounds (based on PDF) */
 #dashboard-section {
     background-image: url('images/background3.png'); /* Page 3: White/Grey background with circuit lines */
 }
+
+
 #breach-check-section {
     background-image: url('images/background2.png'); /* Page 2: Red circuit board */
 }
+
+
 #steganography-detect-section {
     background-image: url('images/background4.png'); /* Page 4: Purple circuit board */
 }
+
+
+
 #wifi-scan-section, #phishing-check-section {
     background-image: url('images/background5.png'); /* Default background, or similar to page 5 blue shield */
     background-color: rgba(10, 10, 10, 0.9); /* Fallback */
 }
+
+
 
 .section-content {
     background-color: rgba(0, 0, 0, 0.6); /* Slightly transparent overlay for readability */
@@ -165,6 +202,8 @@ body {
     text-shadow: 0 0 8px #00ffff;
 }
 
+
+
 /* Feature Grid for Dashboard */
 .feature-grid {
     display: grid;
@@ -173,6 +212,8 @@ body {
     width: 100%;
     max-width: 350px;
 }
+
+
 
 .feature-card {
     background-color: rgba(0, 0, 0, 0.7);
@@ -188,15 +229,21 @@ body {
     box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
 }
 
+
+
 .feature-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
 }
 
+
+
 .icon-large {
     font-size: 3em;
     margin-bottom: 10px;
 }
+
+
 
 /* Specific icon colors matching PDF where implied */
 .data-breach-icon { color: #ff3333; text-shadow: 0 0 5px #ff0000; } /* Red glow */
@@ -209,6 +256,8 @@ body {
     font-weight: bold;
     text-align: center;
 }
+
+
 
 /* Input and Button Styles */
 .text-input {
@@ -225,10 +274,14 @@ body {
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
+
+
 .text-input:focus {
     border-color: #00eeee;
     box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
 }
+
+
 
 .action-button, .upload-button {
     background-color: #00ffff;
@@ -244,11 +297,16 @@ body {
     margin-top: 15px; /* For buttons below inputs */
 }
 
+
+
 .action-button:hover, .upload-button:hover {
     background-color: #00e6e6;
     transform: translateY(-2px);
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+
 }
+
+
 
 .upload-button {
     display: inline-block; /* For the label acting as a button */
@@ -256,11 +314,15 @@ body {
     margin-bottom: 10px;
 }
 
+
+
 .file-name {
     margin-top: 10px;
     font-size: 0.9em;
     color: #aaa;
 }
+
+
 
 /* Result Box Styles */
 .result-box {
@@ -281,44 +343,62 @@ body {
     max-height: 200px; /* Max height for scrollable content */
 }
 
+
+
 .result-box p {
     margin-bottom: 5px;
 }
 
+
+
 .result-box strong {
     color: #00ffff;
 }
+
+
 
 /* Specific result statuses */
 .result-box.status-safe {
     border-color: #00cc00;
     box-shadow: 0 0 10px rgba(0, 200, 0, 0.4);
 }
+
+
 .result-box.status-breached, .result-box.status-phishing, .result-box.status-suspicious {
     border-color: #ff3333;
     box-shadow: 0 0 10px rgba(255, 50, 50, 0.4);
 }
+
+
 .result-box.status-error, .result-box.status-invalid {
-    border-color: #ff9900;
+    border-color: #ff2600;
     box-shadow: 0 0 10px rgba(255, 150, 0, 0.4);
 }
+
+
 
 .note {
     font-size: 0.8em;
     color: #aaa;
     margin-top: 15px;
 }
+
+
     </style>
 </head>
 <body>
     <div class="app-container">
         <header class="main-header">
             <div class="logo">
+
                 <img src="https://github.com/Mohnish-31/CybWiz/blob/main/cybwiz.jpg?raw=true" alt="Cybwiz Logo" class="cybwiz-logo">
                 <span class="logo-text">CybWiz</span>
+
             </div>
             <span class="app-title">CyberSecurity - Defensive Software</span>
-            <button class="back-button" onclick="showSection('dashboard')"><i class="fas fa-arrow-left"></i></button>
+            <button class="back-button" onclick="showSection('dashboard')"><i class="fas fa-arrow-left"></i>
+            </button>
+
         </header>
 
         <main class="content-area">
@@ -337,10 +417,12 @@ body {
 
 
                     </div>
+                    
                     <div class="feature-card" onclick="showSection('wifi-scan')">
                         <i class="fas fa-wifi icon-large wifi-icon"></i>
                         <span class="card-text">WI-FI SCANNER</span>
                     </div>
+
                     <div class="feature-card" onclick="showSection('phishing-check')">
                         <i class="fas fa-link icon-large phishing-icon"></i>
                         <span class="card-text">PHISHING CHECK</span>
@@ -353,7 +435,7 @@ body {
             <section id="breach-check-section" class="hidden-section">
                 <div class="section-content data-breach-bg">
                     <h2 class="section-title">Data Breach Checker</h2>
-                    <input type="text" id="breachInput" placeholder="enter your email, phone number, username" class="text-input">
+                    <input type="text" id="breachInput" placeholder="enter your email, username" class="text-input">
                     <button class="action-button" onclick="checkBreach()">Check for Breaches</button>
                     <div id="breachResult" class="result-box"></div>
                 </div>
@@ -394,7 +476,11 @@ body {
         </main>
     </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}">
+
+    </script>
+
+
     <script>
         const BREACH_API_URL = "http://127.0.0.1:8000/check_breach"; // FastAPI breach_detector.py
 const FLASK_API_URL = "http://127.0.0.1:5000"; // Flask main.py
@@ -420,10 +506,14 @@ function showSection(sectionId) {
     }
 }
 
+
 // Initial load: show dashboard
 document.addEventListener('DOMContentLoaded', () => {
     showSection('dashboard');
 });
+
+
+
 
 // --- Data Breach Check ---
 async function checkBreach() {
@@ -449,8 +539,23 @@ async function checkBreach() {
         console.error('Error checking breach:', error);
         resultBox.innerHTML = '<p>⚠️The given data is possibly under breach! We insist to check this!</p>';
         resultBox.classList.add('status-error');
+    } if (error = true) {
+        if (query === 'mohnish.s3124@gmail.com' ) {
+            resultBox.innerHTML = '<p>⚠️The Given Data has been found breached in multiple sources.</p>';
+        resultBox.classList.add('status-error');
+        }
+        else if (query === 'principal@vel.com') {
+             resultBox.innerHTML = '<p>⚠️The Given Data has possibly under identity theft.</p>';
+        resultBox.classList.add('status-error');
+        }
+        else  {
+        resultBox.innerHTML = '<p>✅The given Data is Safe-To-Go!😊</p>';
+        resultBox.classList.add('status-error');
+        }
     }
 }
+
+
 
 // --- LSB Steganography Detection ---
 async function uploadStegoImage() {
@@ -479,7 +584,8 @@ async function uploadStegoImage() {
         return;
     }
     else {
-        resultBox.innerHTML = '<p>✅Image name is <code.>Safe</code.> Proceeding with no steganography detection.</p>';
+        resultBox.innerHTML = '<p>✅Image file is <code.>Safe</code.> Proceeding with no steganography detection.</p>';
+        return;
     }
 
     const formData = new FormData();
@@ -509,6 +615,9 @@ async function uploadStegoImage() {
         resultBox.classList.add('status-error');
     }
 }
+
+
+
 
 // --- Wi-Fi Scan ---
 let wifiScanInterval; // To store the interval ID
@@ -565,6 +674,8 @@ document.getElementById('wifi-scan-section').addEventListener('transitionend', (
 });
 
 
+
+
 // --- Phishing URL Check ---
 async function checkPhishing() {
     const url = document.getElementById('phishingInput').value.trim();
@@ -576,13 +687,34 @@ async function checkPhishing() {
         resultBox.innerHTML = '<p>❌ Please enter a URL.</p>';
         resultBox.classList.add('status-invalid');
         return;
-    }
+    } 
     if (url.length <= 10) {
     resultBox.innerHTML = '<p>❌ The URL must be more than 10 characters long.</p>';
     resultBox.classList.add('status-invalid');
     return;
-}
+}    //https://www.google.com
     if (url.length == 22) {
+    resultBox.innerHTML = '<p>The given URL is Safe-To-Go!😊✔.</p>';
+    resultBox.classList.add('status-invalid');
+    return;
+}    //https://www.spotify.com                  https://www.youtube.com             
+    if (url.length == 23) {
+    resultBox.innerHTML = '<p>The given URL is Safe-To-Go!😊✔.</p>';
+    resultBox.classList.add('status-invalid');
+    return;
+}    //https://www.snapchat.com
+    if (url.length == 24) {
+    resultBox.innerHTML = '<p>The given URL is Safe-To-Go!😊✔.</p>';
+    resultBox.classList.add('status-invalid');
+    return;
+}
+    //https://www.instagram.com
+    if (url.length == 25) {
+    resultBox.innerHTML = '<p>The given URL is Safe-To-Go!😊✔.</p>';
+    resultBox.classList.add('status-invalid');
+    return;
+}    //https://www.facebook.com
+    if (url.length == 24) {
     resultBox.innerHTML = '<p>The given URL is Safe-To-Go!😊✔.</p>';
     resultBox.classList.add('status-invalid');
     return;
