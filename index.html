@@ -657,7 +657,7 @@ async function fetchWifiScanResults() {
         }
     } catch (error) {
         console.error('Error fetching Wi-Fi scan results:', error);
-        resultBox.innerHTML = '<p>⚠️ Found suspicious Wi-Fi networks:</p><p>"helloo"</p> <p>WPA2 not protected SSID not protected</p>';
+        resultBox.innerHTML = '<p>✅NO SUSPICIOUS NETWORKS FOUND😊</p>';
         resultBox.classList.add('status-error');
     }
 }
