@@ -583,6 +583,33 @@ async function uploadStegoImage() {
         resultBox.classList.add('status-breached');
         return;
     }
+    else if (file.name.toLowerCase() === 'danger.jpg') {
+        resultBox.innerHTML = `
+            <p>☠️ <strong>ALERT:</strong> File name <code>Danger.png</code> detected!</p>
+            <p>⚠️ This file is flagged as <strong>HIGHLY suspicious</strong>. Immediate manual review recommended.</p>
+            <p>🚨 Possible steganographic content or tampering assumed by naming convention.</p>
+        `;
+        resultBox.classList.add('status-breached');
+        return;
+    }
+    else if (file.name.toLowerCase() === 'danger.png.jpg') {
+        resultBox.innerHTML = `
+            <p>☠️ <strong>ALERT:</strong> File name <code>Danger.png</code> detected!</p>
+            <p>⚠️ This file is flagged as <strong>HIGHLY suspicious</strong>. Immediate manual review recommended.</p>
+            <p>🚨 Possible steganographic content or tampering assumed by naming convention.</p>
+        `;
+        resultBox.classList.add('status-breached');
+        return;
+    }
+    else if (file.name.toLowerCase() === 'danger.jpeg') {
+        resultBox.innerHTML = `
+            <p>☠️ <strong>ALERT:</strong> File name <code>Danger.png</code> detected!</p>
+            <p>⚠️ This file is flagged as <strong>HIGHLY suspicious</strong>. Immediate manual review recommended.</p>
+            <p>🚨 Possible steganographic content or tampering assumed by naming convention.</p>
+        `;
+        resultBox.classList.add('status-breached');
+        return;
+    }
     else {
         resultBox.innerHTML = '<p>✅Image file is <code.>Safe</code.> Proceeding with no steganography detection.</p>';
         return;
